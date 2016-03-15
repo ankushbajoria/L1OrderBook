@@ -6,6 +6,7 @@
 #include <utility>
 
 #include <cassert>
+#include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/mman.h>
 #include <sys/types.h>
@@ -79,11 +80,11 @@ EventParser::next() {
 
     // we are not currently handling the scenario of read less than PacketHeader
     auto pktHdr = reinterpret_cast<const PacketHeader*>(m_buffer);
-    auto pktLen = ::ntohs(pktHdr->length);
+    auto pktLen = ntohs(pktHdr->length);
 
     m_offset += pktLen;
 
-    m_numRemainingEvts  = ::ntohs(pktHdr->numUpdates);
+    m_numRemainingEvts  = ntohs(pktHdr->numUpdates);
     m_totalEvts         += m_numRemainingEvts;
     m_dgramBuf          = m_buffer + sizeof(PacketHeader);
   }
@@ -94,7 +95,7 @@ EventParser::next() {
     case MsgType::QUOTE:
     {
       auto quoteMsg = reinterpret_cast<Quote*>(m_dgramBuf);
-      m_dgramBuf += ::ntohs(hdr->length);
+      m_dgramBuf += ntohs(hdr->length);
       m_numRemainingEvts--;
 
       return std::make_pair(ExchMsg(*quoteMsg), true);
@@ -102,7 +103,7 @@ EventParser::next() {
     case MsgType::TRADE:
     {
       auto tradeMsg = reinterpret_cast<Trade*>(m_dgramBuf);
-      m_dgramBuf += ::ntohs(hdr->length);
+      m_dgramBuf += ntohs(hdr->length);
       m_numRemainingEvts--;
 
       return std::make_pair(ExchMsg(*tradeMsg), true);
