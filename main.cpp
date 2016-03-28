@@ -53,20 +53,21 @@ int main(int argc, char** argv) {
     latencies(end - start);
   }
 
-  std::cout << "Min latency:  " << boost::accumulators::min(latencies)    << std::endl;
-  std::cout << "Max latency:  " << boost::accumulators::max(latencies)    << std::endl;
-  std::cout << "Mean latency: " << boost::accumulators::mean(latencies)   << std::endl;
+  LOG(INFO, "Min latency:  " + std::to_string( boost::accumulators::min(latencies)));
+  LOG(INFO, "Max latency:  " + std::to_string( boost::accumulators::max(latencies)));
+  LOG(INFO, "Mean latency: " + std::to_string( boost::accumulators::mean(latencies)));
 
-  std::cout << "Quantile .01: " << boost::accumulators::quantile(latencies, quantile_probability = 0.01) << std::endl;
-  std::cout << "Quantile .05: " << boost::accumulators::quantile(latencies, quantile_probability = 0.05) << std::endl;
-  std::cout << "Quantile .10: " << boost::accumulators::quantile(latencies, quantile_probability = 0.1) << std::endl;
-  std::cout << "Quantile .25: " << boost::accumulators::quantile(latencies, quantile_probability = 0.25) << std::endl;
-  std::cout << "Quantile .50: " << boost::accumulators::quantile(latencies, quantile_probability = 0.5) << std::endl;
-  std::cout << "Quantile .75: " << boost::accumulators::quantile(latencies, quantile_probability = 0.75) << std::endl;
-  std::cout << "Quantile .90: " << boost::accumulators::quantile(latencies, quantile_probability = 0.90) << std::endl;
-  std::cout << "Quantile .95: " << boost::accumulators::quantile(latencies, quantile_probability = 0.95) << std::endl;
-  std::cout << "Quantile .99: " << boost::accumulators::quantile(latencies, quantile_probability = 0.99) << std::endl;
+  LOG(INFO, "Quantile .01: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.01)));
+  LOG(INFO, "Quantile .05: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.05)));
+  LOG(INFO, "Quantile .10: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.1)));
+  LOG(INFO, "Quantile .25: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.25)));
+  LOG(INFO, "Quantile .50: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.5)));
+  LOG(INFO, "Quantile .75: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.75)));
+  LOG(INFO, "Quantile .90: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.90)));
+  LOG(INFO, "Quantile .95: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.95)));
+  LOG(INFO, "Quantile .99: " + std::to_string( boost::accumulators::quantile(latencies, quantile_probability = 0.99)));
 
+  Logger::getInstance()->~Logger();
 
   return 0;
-} 
+}
